@@ -1,0 +1,13 @@
+Comando para iniciar um projeto electron:
+npm init -y
+npm install electron --save-dev typescript @types/node electron-builder
+npx electron-forge init "nome do projeto" -> inicia o projeto do zero sem precisar dependência por dependência manualmente
+
+"start": "electron-forge start", -> comando para iniciar o projeto
+
+====================================================================
+
+Coisas para fazer no projeto:
+1 - Numerar as tarefas
+2 - Cores para prioridades das tarefas
+3 - Usar o arrastar e soltar para mover as tarefas
