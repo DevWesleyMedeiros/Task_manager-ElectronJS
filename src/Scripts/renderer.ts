@@ -1,8 +1,9 @@
 // Tipos para melhor tipagem
 interface Task {
   id: string;
+  class: string | null;
   text: string;
-  priority: "baixa" | "media" | "alta";
+  priority: "low" | "media" | "high";
   completed: boolean;
   createdAt: Date;
 }
@@ -26,14 +27,16 @@ class TaskManager {
     this.loadTasks();
   }
 
-  // inicialização dos elementos html
+  // função que recupera os elementos do html DOM
   private initializeElements(): void {
     this.taskInput = document.getElementById("taskInput") as HTMLInputElement;
     this.addTaskBtn = document.getElementById("addTask") as HTMLButtonElement;
     this.taskList = document.getElementById("taskList") as HTMLUListElement;
+
     this.taskPrioritySelect = document.getElementById(
       "taskPriority"
     ) as HTMLSelectElement;
+
     this.taskCountDisplay = document.getElementById(
       "taskCount"
     ) as HTMLSpanElement;
@@ -46,7 +49,7 @@ class TaskManager {
     ) as HTMLDialogElement;
   }
 
-  // adiciona eventos aos elementos html
+  // adiciona eventos aos elementos
   private bindEvents(): void {
     this.addTaskBtn.addEventListener("click", () => this.addTask());
     this.taskInput.addEventListener("keydown", (event) => {
@@ -69,6 +72,7 @@ class TaskManager {
 
     const newTask: Task = {
       id: this.generateUniqueId(),
+      class: null,
       text: taskText,
       priority: this.taskPrioritySelect.value as Task["priority"],
       completed: false,
@@ -105,11 +109,14 @@ class TaskManager {
       const actionContainer = document.createElement("div");
       actionContainer.classList.add("task-actions");
 
+      // botão de editar tarefa
       const editButton = this.createButton(
         "Editar",
         () => this.editTask(task.id),
         "edit-btn"
       );
+
+      // botão de deletar tarefa
       const deleteButton = this.createButton(
         "Deletar",
         () => this.confirmDeleteTask(task.id),
@@ -123,7 +130,7 @@ class TaskManager {
 
     this.updateTaskCount();
   }
-
+  // função para criar botões
   private createButton(
     text: string,
     onClick: () => void,
@@ -136,6 +143,7 @@ class TaskManager {
     return button;
   }
 
+  // função para alterar entre as completadas
   private toggleTaskCompletion(taskId: string): void {
     const task = this.tasks.find((t) => t.id === taskId);
     if (task) {
@@ -145,15 +153,17 @@ class TaskManager {
     }
   }
 
+  // função para editar tarefas
   private editTask(taskId: string): void {
     const task = this.tasks.find((t) => t.id === taskId);
     if (task) {
-      const newText = prompt("Editar tarefa:", task.text);
-      if (newText !== null && newText.trim() !== "") {
-        task.text = newText.trim();
-        this.renderTasks();
-        this.saveTasks();
-      }
+      this.taskInput.value = task.text.trim();
+      // const newText = prompt(`Editar tarefa: ${task.text}`);
+      // if (newText !== null && newText.trim() !== "") {
+      //   task.text = newText.trim();
+      //   // this.renderTasks();
+      //   // this.saveTasks();
+      // }
     }
   }
 

@@ -10,8 +10,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: ,
-    autoHideMenuBar: true,
+    resizable: true,
+      autoHideMenuBar: false,
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);

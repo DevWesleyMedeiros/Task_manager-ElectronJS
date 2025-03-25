@@ -78,6 +78,7 @@ var TaskManager = /** @class */ (function () {
         });
         this.updateTaskCount();
     };
+    // função para criar botões
     TaskManager.prototype.createButton = function (text, onClick, className) {
         var button = document.createElement("button");
         button.textContent = text;
@@ -85,6 +86,7 @@ var TaskManager = /** @class */ (function () {
         button.addEventListener("click", onClick);
         return button;
     };
+    // função para alterar entre as completadas
     TaskManager.prototype.toggleTaskCompletion = function (taskId) {
         var task = this.tasks.find(function (t) { return t.id === taskId; });
         if (task) {
@@ -93,6 +95,7 @@ var TaskManager = /** @class */ (function () {
             this.saveTasks();
         }
     };
+    // função para editar tarefas
     TaskManager.prototype.editTask = function (taskId) {
         var task = this.tasks.find(function (t) { return t.id === taskId; });
         if (task) {
