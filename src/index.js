@@ -10,7 +10,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: false,
+    resizable: ,
+    autoHideMenuBar: true,
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -32,3 +33,4 @@ app.on('activate', () => {
   }
 });
 
+// Arquivo de configuração da janela

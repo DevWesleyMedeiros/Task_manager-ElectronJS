@@ -32,38 +32,45 @@ As principais tecnologias usadas no projeto são:
 Antes de começar, é necessário ter o **Node.js** instalado.  
 Baixe e instale a versão mais recente em:  
 🔗 [https://nodejs.org/](https://nodejs.org/)  
+🔗 [https://electronjs/](https://www.electronjs.org/pt/)
 
-# Criar a pasta do projeto e entrar nela
+## Criar a pasta do projeto e entrar nela
 ```sh
 mkdir gerenciador-tarefas
 cd gerenciador-tarefas
 ```
-# Inicializar o projeto Node.js
 ```sh
-npm init -y
+npm init -y ... (inicializa o npm)
 ```
-# Instalar Electron e dependências
+## Instalação de dependências typescrit electron e @types/node
 ```sh
-npm install --save-dev electron typescript @types/node electron-builder electron-reload
+npm install electron --save-dev typescript @types/node electron-builder
 ```
-**@types/node** -> Adiciona as definições de tipos do Node.js para o TypeScript.
-**electron-builder** -> Ferramenta para criar pacotes de instalação
+**Intala como devDependency**
+[typescript] -> linguagem de programação
+[@types/node] -> biblioteca de tipos para o Node.js usado no electron
+[electron-builder] -> ferramenta para criar pacotes de instalação
 
-# Adicionar Electron Forge
-npx electron-forge import
+**inicia o projeto do zero sem precisar dependência por dependência manualmente**
+```sh
+npx electron-forge init ... (instala dependências electron)
+``` 
+### O que esse comando👆 faz??
+- Todas as dependências necessárias para o projeto
+- Instala o eslint para um projeto electron
+- compiler do electron
+- Diretório padrão e demais pastas de github
 
-Para verificar se a instalação foi bem-sucedida, execute:  
-```sh
-node -v
-npm -v
-```
-# Inicializar o projeto com Electron Forge
-```sh
-npx electron-forge init 
+### Comandos para iniciar o projeto
+<p>"start": "electron-forge start"</p>
+
+```package.json
+npm start -> comando para iniciar o projeto
 ```
 **iniciando o projeto e incluem todas as dependências necessárias.**
 
 ## Sugestão de Estrutura de Pastas
+```sh
 gerenciador-tarefas/
 │── src/
 │   ├── index.ts       # Código principal do Electron
@@ -73,3 +80,10 @@ gerenciador-tarefas/
 │── package.json       # Configuração do projeto
 │── tsconfig.json      # Configuração do TypeScript
 │── forge.config.js    # Configuração do Electron Forge
+```
+--- 
+# Clone do projeto
+```sh
+git clone https://github.com/seu-usuario/gerenciador-tarefas.git
+```
+

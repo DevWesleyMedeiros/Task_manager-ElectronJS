@@ -4,22 +4,112 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aplicativo de Gerenciamento de Tarefas - Organize suas atividades diárias com facilidade" />
+    <meta name="keywords" content="todo, lista de tarefas, gerenciador, produtividade" />
+    <meta name="author" content="Wesley Medeiros" />
+    <meta name="application-name" content="Gerenciador de Tarefas" />
+    
+    <!-- Ícone do aplicativo (substitua pelo seu próprio ícone) -->
+    <!-- <link rel="icon" type="image/png" href="assets/favicon.png" /> -->
+    
+    <!-- Folhas de estilo -->
     <link rel="stylesheet" href="Styles/style.css" />
-    <title></title>
+    
+    <!-- Fontes externas -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+    
+    <title>Gerenciador de Tarefas</title>
   </head>
   <body>
-    <div class="container_tasks">
-      <h1>Gerenciador de Tarefas</h1>
+    <div class="container">
+      <header class="app-header">
+        <h1>Gerenciador de Tarefas</h1>
+        <p class="app-description">Organize suas atividades de forma eficiente</p>
+      </header>
 
-      <div class="tasks">
-        <label for="task__input"></label>
-        <input type="text" id="taskInput" placeholder="Digite sua tarefa" itemid="task__input"/>
-      </div>
-      
-      <button id="addTask" class="addTask">Adicionar</button>
-      <ul id="taskList"></ul>
+      <!-- Componente de Entrada de Tarefa -->
+      <main class="task-manager">
+        <section class="task-input-section">
+          <div class="input-wrapper">
+            <label for="taskInput" class="sr-only">Nova Tarefa</label>
+            <input 
+              type="text" 
+              id="taskInput" 
+              name="taskInput"
+              class="task-input" 
+              placeholder="Digite sua tarefa" 
+              maxlength="100"
+              aria-describedby="taskInputHelp"
+            />
+            <span id="taskInputHelp" class="input-help">Máximo de 100 caracteres</span>
+          </div>
+          
+          <!-- Select options de prioridade de tarefas -->
+          <div class="task-priority">
+            <label for="taskPriority">Prioridade:</label>
+            <select id="taskPriority" name="taskPriority">
+              <option value="baixa">Baixa</option>
+              <option value="media" selected>Média</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+
+          <button 
+            id="addTask" 
+            class="btn btn-add-task" 
+            aria-label="Adicionar Tarefa"
+          >
+            Adicionar Tarefa
+          </button>
+
+        </section>
+
+        <!-- Componente que filtra as tarefas -->
+        <section class="task-list-section">
+          <div class="task-list-header">
+            <h2>Minhas Tarefas</h2>
+            <div class="task-filters">
+              <button id="filterAll" class="btn btn-filter active">Todas</button>
+              <button id="filterActive" class="btn btn-filter">Ativas</button>
+              <button id="filterCompleted" class="btn btn-filter">Concluídas</button>
+            </div>
+          </div>
+
+          <ul 
+            id="taskList" 
+            class="task-list" 
+            aria-live="polite"
+          ></ul>
+
+          <div class="task-summary">
+            <span id="taskCount">0 tarefas</span>
+            <button 
+              id="clearCompleted" 
+              class="btn btn-clear-completed"
+            >
+              Limpar Concluídas
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>&copy; 2024 Gerenciador de Tarefas. Todos os direitos reservados
+          <strong>Wesley Medeiros da Rosa</strong>
+        </p>
+      </footer>
     </div>
-    <script src="Scripts/renderer.js"></script>
+
+    <!-- Modais e Diálogos nativos do HTML5 -->
+    <dialog id="confirmDeleteDialog" class="modal">
+      <h3>Confirmar Exclusão</h3>
+      <p>Tem certeza que deseja excluir esta tarefa?</p>
+      <div class="modal-actions">
+        <button id="confirmDelete" class="btn btn-confirm">Sim</button>
+        <button id="cancelDelete" class="btn btn-cancel">Cancelar</button>
+      </div>
+    </dialog>
+
+    <script src="Scripts/renderer.js" type="module"></script>
   </body>
 </html>
-
