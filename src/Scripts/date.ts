@@ -9,6 +9,7 @@ class CurrentDate {
     }
 
     private initializeClockElements(): void {
+
         // Pega os elementos do HTML
         this.currentTime = document.getElementById("clockCurrentTime") as HTMLDivElement;
         this.currentDay = document.getElementById("clockCurrentDay") as HTMLDivElement;

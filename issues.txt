@@ -1,5 +1,3 @@
 Coisas para fazer no projeto:
-1 - Cores para prioridades das tarefas (prioridade baixa, média e alta)
-2 - Usar o arrastar e soltar para mover as tarefas
-3 - Lógica para editar tarefas
-4 - Colocar um relógio e calendário em cada tarefas
+1 - Usar o arrastar e soltar para mover as tarefas
+2 - Lógica para editar tarefas

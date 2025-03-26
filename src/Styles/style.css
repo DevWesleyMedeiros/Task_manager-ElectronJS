@@ -97,7 +97,7 @@ html, body {
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 5px;
-  textopacity: .5;
+  color: #ccc;
   border: var(--default-border);
 }
 
