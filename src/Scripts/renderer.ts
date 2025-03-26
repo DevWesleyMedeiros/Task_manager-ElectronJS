@@ -262,3 +262,4 @@ class TaskManager {
 document.addEventListener("DOMContentLoaded", () => {
   new TaskManager();
 });
+

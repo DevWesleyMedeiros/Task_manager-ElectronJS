@@ -17,6 +17,7 @@
   --color-text-dark: #2c3e50;
   --color-text-light: #ffffff;
   --color-border: #bdc3c7;
+  -- default-border: 1px solid #ccc;
   
   /* Sombras */
   --shadow-subtle: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -70,7 +71,8 @@ li.priority-high{
 
 /* Estilo Base */
 html, body {
-  height: 100%;
+  width: 100svw;
+  height: auto;
   background-color: var(--color-background);
   color: var(--color-text-dark);
   line-height: 1.6;
@@ -83,7 +85,19 @@ html, body {
   max-width: 800px;
   width: 95%;
   padding: 1rem;
-  border-radius: 5rem;
+  border-radius: 3rem;
+  border: var(--default-border);
+}
+
+.container .container-clock {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 5px;
+  textopacity: .5;
   border: var(--default-border);
 }
 

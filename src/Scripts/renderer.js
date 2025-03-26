@@ -6,7 +6,7 @@ var TaskManager = /** @class */ (function () {
         this.bindEvents();
         this.loadTasks();
     }
-    // inicialização dos elementos html
+    // função que recupera os elementos do html DOM
     TaskManager.prototype.initializeElements = function () {
         this.taskInput = document.getElementById("taskInput");
         this.addTaskBtn = document.getElementById("addTask");
@@ -17,7 +17,7 @@ var TaskManager = /** @class */ (function () {
         this.filterButtons = document.querySelectorAll(".btn-filter");
         this.confirmDeleteDialog = document.getElementById("confirmDeleteDialog");
     };
-    // adiciona eventos aos elementos html
+    // adiciona eventos aos elementos
     TaskManager.prototype.bindEvents = function () {
         var _this = this;
         this.addTaskBtn.addEventListener("click", function () { return _this.addTask(); });
@@ -39,6 +39,7 @@ var TaskManager = /** @class */ (function () {
             return;
         var newTask = {
             id: this.generateUniqueId(),
+            class: null,
             text: taskText,
             priority: this.taskPrioritySelect.value,
             completed: false,
@@ -70,7 +71,9 @@ var TaskManager = /** @class */ (function () {
             });
             var actionContainer = document.createElement("div");
             actionContainer.classList.add("task-actions");
+            // botão de editar tarefa
             var editButton = _this.createButton("Editar", function () { return _this.editTask(task.id); }, "edit-btn");
+            // botão de deletar tarefa
             var deleteButton = _this.createButton("Deletar", function () { return _this.confirmDeleteTask(task.id); }, "delete-btn");
             actionContainer.append(editButton, deleteButton);
             li.append(taskTextSpan, actionContainer);
@@ -99,12 +102,13 @@ var TaskManager = /** @class */ (function () {
     TaskManager.prototype.editTask = function (taskId) {
         var task = this.tasks.find(function (t) { return t.id === taskId; });
         if (task) {
-            var newText = prompt("Editar tarefa:", task.text);
-            if (newText !== null && newText.trim() !== "") {
-                task.text = newText.trim();
-                this.renderTasks();
-                this.saveTasks();
-            }
+            this.taskInput.value = task.text.trim();
+            // const newText = prompt(`Editar tarefa: ${task.text}`);
+            // if (newText !== null && newText.trim() !== "") {
+            //   task.text = newText.trim();
+            //   // this.renderTasks();
+            //   // this.saveTasks();
+            // }
         }
     };
     TaskManager.prototype.confirmDeleteTask = function (taskId) {

@@ -27,6 +27,21 @@
         <p class="app-description">Organize suas atividades de forma eficiente</p>
       </header>
 
+      <div class="container-clock">
+        <div class="clock-current-time" id="clockCurrentTime">
+          <!-- Hora atual hora:minuto:segundo -->
+           <!-- 14:30:00 -->
+        </div>
+        <div class="clock-current-day" id="clockCurrentDay">
+          <!-- Dia atual -->
+           <!-- Quarta-feira -->
+        </div>
+        <div class="clock-current-date" id="clockCurrentDate">
+          <!-- data atual formatada dd/mm/yyyy  -->
+           <!-- 26/03/2025 -->
+        </div>
+      </div>
+
       <!-- Componente de Entrada de Tarefa -->
       <main class="task-manager">
         <section class="task-input-section">
@@ -111,5 +126,6 @@
     </dialog>
 
     <script src="Scripts/renderer.js" type="module"></script>
+    <script src="Scripts/date.js"></script>
   </body>
 </html>
