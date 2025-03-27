@@ -17,7 +17,7 @@
   --color-text-dark: #2c3e50;
   --color-text-light: #ffffff;
   --color-border: #bdc3c7;
-  -- default-border: 1px solid #ccc;
+  --default-border: 1px solid #ccc;
   
   /* Sombras */
   --shadow-subtle: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -52,6 +52,7 @@
 /* prioridades das tarefas */
 li{
   color: var(--color-text-light);
+  position: relative;
 }
 li.priority-low{
   background-color: #2ecc71 !important;
