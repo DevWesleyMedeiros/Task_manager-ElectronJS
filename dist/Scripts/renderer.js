@@ -185,3 +185,4 @@ class TaskManager {
 document.addEventListener("DOMContentLoaded", () => {
     new TaskManager();
 });
+// Drag and drop effect

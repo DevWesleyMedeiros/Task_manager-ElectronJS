@@ -9,14 +9,14 @@ interface Task {
 }
 
 class TaskManager {
-  private taskInput: HTMLInputElement;
-  private addTaskBtn: HTMLButtonElement;
-  private taskList: HTMLUListElement;
-  private taskPrioritySelect: HTMLSelectElement;
-  private taskCountDisplay: HTMLSpanElement;
-  private clearCompletedBtn: HTMLButtonElement;
-  private filterButtons: NodeListOf<HTMLButtonElement>;
-  private confirmDeleteDialog: HTMLDialogElement;
+  private taskInput!: HTMLInputElement;
+  private addTaskBtn!: HTMLButtonElement;
+  private taskList!: HTMLUListElement;
+  private taskPrioritySelect!: HTMLSelectElement;
+  private taskCountDisplay!: HTMLSpanElement;
+  private clearCompletedBtn!: HTMLButtonElement;
+  private filterButtons!: NodeListOf<HTMLButtonElement>;
+  private confirmDeleteDialog!: HTMLDialogElement;
 
   private tasks: Task[] = [];
 
@@ -95,6 +95,8 @@ class TaskManager {
     // cria lista de tarefas filtrando por prioridade
     filteredTasks.forEach((task) => {
       const li = document.createElement("li");
+      li.setAttribute("class", "task");
+      li.setAttribute("draggable", "true");
       li.dataset.taskId = task.id;
       li.classList.add(`priority-${task.priority}`);
       if (task.completed) li.classList.add("completed");
@@ -261,6 +263,79 @@ class TaskManager {
 // Inicialização do gerenciador de tarefas a partir do carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
   new TaskManager();
+  const dragAndDropEvents = new DragAndDropEvents();
 });
 
-// 
+
+// Drag and drop effect
+class DragAndDrop {
+  protected listTasksItems!: HTMLUListElement;
+  constructor() {
+    this.initDomElements();
+  }
+  private initDomElements() {
+    this.listTasksItems = document.querySelector(
+      "#taskList"
+    ) as HTMLUListElement;
+  }
+}
+
+class DragAndDropEvents extends DragAndDrop {
+  private dragItem!: HTMLElement | null;
+  constructor() {
+    super();
+    this.addEvents();
+  }
+
+  // função que adiciona os eventos
+  private addEvents() {
+    this.listTasksItems.addEventListener("dragstart", (event) => {
+      this.dragItem = event.target as HTMLElement;
+      this.dragItem.classList.add("dragging");
+    });
+
+    // evento disparado quando o elemento termina de ser arrastado
+    this.listTasksItems.addEventListener("dragend", (event) => {
+      if (this.dragItem) {
+        this.dragItem.classList.remove("dragging");
+        this.dragItem = null;
+      }
+    });
+
+    // evento que é disparado quando o elemento está sendo arrastado sobre o elemento
+    this.listTasksItems.addEventListener("dragover", (event) => {
+      event.preventDefault(); // previne comportamento padrão do elemento
+
+      const draggable = document.querySelector(".dragging") as HTMLElement;
+      const afterElement = GetDrgAfterElements.getDragAfterElement(
+        event.clientY
+      );
+      if (afterElement == null) {
+        this.listTasksItems.appendChild(draggable);
+      } else {
+        this.listTasksItems.insertBefore(draggable, afterElement);
+      }
+    });
+  }
+}
+// classe que retorna o elemento após o elemento que está sendo arrastado
+class GetDrgAfterElements extends DragAndDrop {
+  static listTasks: any;
+  static getDragAfterElement(positionY: number) {
+    const draggableElements = [
+      ...this.listTasks.querySelectorAll(".task:not(.dragging)"),
+    ];
+    return draggableElements.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = positionY - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      },
+      { offset: Number.NEGATIVE_INFINITY }
+    ).element;
+  }
+}
