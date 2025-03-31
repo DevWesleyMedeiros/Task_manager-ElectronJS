@@ -82,8 +82,19 @@ gerenciador-tarefas/
 │── forge.config.js    # Configuração do Electron Forge
 ```
 --- 
-# Clone do projeto
+## Na pasta out, estão os arquivos executáveis para Win-64, Linux e Mac
+---
+# Se você queiser clonar o projeto, siga o passo a passo abaixo 
+
+## Clone do projeto
 ```sh
 git clone https://github.com/seu-usuario/gerenciador-tarefas.git
 ```
-
+## Instale as dependência necessárias
+```sh
+npm install
+```
+## Rode o comando para iniciar projeto
+```sh
+npm start
+```
