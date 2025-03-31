@@ -29,6 +29,17 @@
   /* Borda */
   --default-border: 1px solid var(--color-border);
 }
+/* Fonts */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('fonts/static/SourceCodePro-Regular.woff2') format('woff2'),
+         url('fonts/static/SourceCodePro-Regular.woff') format('woff'),
+         url('fonts/static/SourceCodePro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* Botões editar e deletar tarefas */
 .edit-btn, .delete-btn{
   line-height: 0.5;
@@ -49,6 +60,7 @@
   background-color: #30536a;
   color: var(--color-text-light);
 }
+
 /* prioridades das tarefas */
 li{
   color: var(--color-text-light);
@@ -92,15 +104,20 @@ html, body {
 }
 
 .container .container-clock {
-  width: 50%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem auto;
+  margin: 1rem auto 1.5rem auto;
   padding: 1rem;
   border-radius: 5px;
-  color: #ccc;
-  border: var(--default-border);
+  -webkit-box-shadow: 3px 3px 12px 7px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 3px 12px 7px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 10px 3px rgba(0,0,0,0.50);
+}
+.container-clock .time{
+  font-family: 'Source Code Pro', monospace;
+  color: var(--color-text-dark);
 }
 
 /* Cabeçalho */

@@ -1,4 +1,3 @@
 Coisas para fazer no projeto:
-1 - Usar o arrastar e soltar para mover as tarefas
+
 2 - Lógica para editar tarefas
-3 - Criar uma caixa de dialago que indicara se a tarefa está concluída ou não, onde também entrará o botão de editar

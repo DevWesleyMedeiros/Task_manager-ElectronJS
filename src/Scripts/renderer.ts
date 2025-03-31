@@ -84,7 +84,7 @@ class TaskManager {
     this.saveTasks();
 
     this.taskInput.value = "";
-    this.taskPrioritySelect.selectedIndex = 1; // Volta para prioridade média
+    this.taskPrioritySelect.selectedIndex = 1;
   }
 
   private renderTasks(filter: "all" | "active" | "completed" = "all"): void {
@@ -118,7 +118,7 @@ class TaskManager {
         "edit-btn"
       );
 
-      // botão de deletar tarefa
+      // botão de deletar tarefa criado
       const deleteButton = this.createButton(
         "Deletar",
         () => this.confirmDeleteTask(task.id),
@@ -132,6 +132,7 @@ class TaskManager {
 
     this.updateTaskCount();
   }
+
   // função para criar botões
   private createButton(
     text: string,
@@ -158,14 +159,21 @@ class TaskManager {
   // função para editar tarefas
   private editTask(taskId: string): void {
     const task = this.tasks.find((t) => t.id === taskId);
+
     if (task) {
       this.taskInput.value = task.text.trim();
-      // const newText = prompt(`Editar tarefa: ${task.text}`);
-      // if (newText !== null && newText.trim() !== "") {
-      //   task.text = newText.trim();
-      //   // this.renderTasks();
-      //   // this.saveTasks();
-      // }
+
+      // Evento para atualizar a tarefa quando o campo perde o foco
+      this.taskInput.addEventListener("blur", () => {
+        const newText = this.taskInput.value.trim();
+
+        // Verifica se o novo texto não está vazio
+        if (newText !== null && newText !== "") {
+          task.text = newText; // Atualiza o texto da tarefa
+          this.renderTasks(); // Re-renderiza as tarefas
+          this.saveTasks(); // Salva as tarefas no localStorage
+        }
+      });
     }
   }
 
@@ -263,79 +271,6 @@ class TaskManager {
 // Inicialização do gerenciador de tarefas a partir do carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
   new TaskManager();
-  const dragAndDropEvents = new DragAndDropEvents();
 });
 
 
-// Drag and drop effect
-class DragAndDrop {
-  protected listTasksItems!: HTMLUListElement;
-  constructor() {
-    this.initDomElements();
-  }
-  private initDomElements() {
-    this.listTasksItems = document.querySelector(
-      "#taskList"
-    ) as HTMLUListElement;
-  }
-}
-
-class DragAndDropEvents extends DragAndDrop {
-  private dragItem!: HTMLElement | null;
-  constructor() {
-    super();
-    this.addEvents();
-  }
-
-  // função que adiciona os eventos
-  private addEvents() {
-    this.listTasksItems.addEventListener("dragstart", (event) => {
-      this.dragItem = event.target as HTMLElement;
-      this.dragItem.classList.add("dragging");
-    });
-
-    // evento disparado quando o elemento termina de ser arrastado
-    this.listTasksItems.addEventListener("dragend", (event) => {
-      if (this.dragItem) {
-        this.dragItem.classList.remove("dragging");
-        this.dragItem = null;
-      }
-    });
-
-    // evento que é disparado quando o elemento está sendo arrastado sobre o elemento
-    this.listTasksItems.addEventListener("dragover", (event) => {
-      event.preventDefault(); // previne comportamento padrão do elemento
-
-      const draggable = document.querySelector(".dragging") as HTMLElement;
-      const afterElement = GetDrgAfterElements.getDragAfterElement(
-        event.clientY
-      );
-      if (afterElement == null) {
-        this.listTasksItems.appendChild(draggable);
-      } else {
-        this.listTasksItems.insertBefore(draggable, afterElement);
-      }
-    });
-  }
-}
-// classe que retorna o elemento após o elemento que está sendo arrastado
-class GetDrgAfterElements extends DragAndDrop {
-  static listTasks: any;
-  static getDragAfterElement(positionY: number) {
-    const draggableElements = [
-      ...this.listTasks.querySelectorAll(".task:not(.dragging)"),
-    ];
-    return draggableElements.reduce(
-      (closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = positionY - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      },
-      { offset: Number.NEGATIVE_INFINITY }
-    ).element;
-  }
-}

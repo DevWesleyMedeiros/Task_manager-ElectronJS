@@ -10,7 +10,10 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint src --color"
+    "lint": "eslint src --color",
+    "build": "electron-builder build --win --x64",
+    "build:mac": "electron-builder build --mac",
+    "build:linux": "electron-builder build --linux"
   },
   "keywords": [],
   "author": "Wesley",
