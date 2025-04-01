@@ -85,25 +85,8 @@ gerenciador-tarefas/
 │── forge.config.js    # Configuração do Electron Forge
 ```
 --- 
-# Se você quiser clonar o projeto, fique a vontade para implementar outras features✌️
-Siga o passo a passo abaixo
-
-## 📌 1️⃣ Clonando o Projeto
-```sh
-git clone https://github.com/DevWesleyMedeiros/Task_manager-ElectronJS.git
-```
-## 📌 2️⃣ Instalando as Dependências
-```sh
-npm install
-```
-## 📌 3️⃣ Executando o Projeto
-```sh
-npm start
-``` 
-## 📌 4️⃣ Construindo o Aplicativo
+# Clone do projeto
 ```sh
 npm run make
 ```
----
-
 
