@@ -7,9 +7,12 @@ O objetivo principal é aprimorar habilidades na configuração de um ambiente d
 
 ## 📌 Sobre o Projeto  
 
-Este projeto é um **Gerenciador de Tarefas (To-Do List)** simples, onde o usuário pode:  
+Este projeto é um **Gerenciador de Tarefas (Task manager)** simples, onde o usuário pode:  
+![gerencador de tarefas](./public/gerenciador_tarefas.png);
 ✅ **Adicionar tarefas**  
+![adicionar tarefas](./public/tarefas_incluidas.png);
 ✅ **Excluir tarefas**  
+![exclusão tarefas](./public/deletar_tarefas.png);
 ✅ **Marcar tarefas como concluídas**  
 ✅ **Salvar os dados localmente**  
 
@@ -82,8 +85,25 @@ gerenciador-tarefas/
 │── forge.config.js    # Configuração do Electron Forge
 ```
 --- 
-# Clone do projeto
+# Se você quiser clonar o projeto, fique a vontade para implementar outras features✌️
+Siga o passo a passo abaixo
+
+## 📌 1️⃣ Clonando o Projeto
 ```sh
-git clone https://github.com/seu-usuario/gerenciador-tarefas.git
+git clone https://github.com/DevWesleyMedeiros/Task_manager-ElectronJS.git
 ```
+## 📌 2️⃣ Instalando as Dependências
+```sh
+npm install
+```
+## 📌 3️⃣ Executando o Projeto
+```sh
+npm start
+``` 
+## 📌 4️⃣ Construindo o Aplicativo
+```sh
+npm run make
+```
+---
+
 

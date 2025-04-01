@@ -20,23 +20,23 @@ class TaskManager {
 
   private tasks: Task[] = [];
 
-  // chamadas na construção da classe para inicializar os elementos html
+  // Chamado no carregamento da página para inicializar os elementos HTML,
+  // adicionar eventos e carregar tarefas salvas
   constructor() {
     this.initializeElements();
     this.bindEvents();
     this.loadTasks();
   }
 
-  // função que recupera os elementos do html DOM
+  // Recupera os elementos do DOM e os armazena em propriedades da classe
+  // Chamado no constructor()
   private initializeElements(): void {
     this.taskInput = document.getElementById("taskInput") as HTMLInputElement;
     this.addTaskBtn = document.getElementById("addTask") as HTMLButtonElement;
     this.taskList = document.getElementById("taskList") as HTMLUListElement;
-
     this.taskPrioritySelect = document.getElementById(
       "taskPriority"
     ) as HTMLSelectElement;
-
     this.taskCountDisplay = document.getElementById(
       "taskCount"
     ) as HTMLSpanElement;
@@ -49,7 +49,8 @@ class TaskManager {
     ) as HTMLDialogElement;
   }
 
-  // adiciona eventos aos elementos
+  // Adiciona eventos aos elementos HTML
+  // Chamado no constructor()
   private bindEvents(): void {
     this.addTaskBtn.addEventListener("click", () => this.addTask());
     this.taskInput.addEventListener("keydown", (event) => {
@@ -65,7 +66,8 @@ class TaskManager {
     });
   }
 
-  // verifica se o input tem value e adiciona a tarefa
+  // Adiciona uma nova tarefa ao array, atualiza a interface e salva no localStorage
+  // Chamado ao clicar no botão "Adicionar Tarefa" ou pressionar "Enter"
   private addTask(): void {
     const taskText = this.taskInput.value.trim();
     if (!taskText) return;
@@ -87,12 +89,13 @@ class TaskManager {
     this.taskPrioritySelect.selectedIndex = 1;
   }
 
+  // Renderiza as tarefas na tela, aplicando filtros se necessário
+  // Chamado por diversas funções como addTask(), toggleTaskCompletion(), editTask() etc.
   private renderTasks(filter: "all" | "active" | "completed" = "all"): void {
     this.taskList.innerHTML = "";
 
     const filteredTasks = this.filterTasksList(filter);
 
-    // cria lista de tarefas filtrando por prioridade
     filteredTasks.forEach((task) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
@@ -111,14 +114,14 @@ class TaskManager {
       const actionContainer = document.createElement("div");
       actionContainer.classList.add("task-actions");
 
-      // botão de editar tarefa
+      // Botão de editar tarefa
       const editButton = this.createButton(
         "Editar",
         () => this.editTask(task.id),
         "edit-btn"
       );
 
-      // botão de deletar tarefa criado
+      // Botão de deletar tarefa
       const deleteButton = this.createButton(
         "Deletar",
         () => this.confirmDeleteTask(task.id),
@@ -133,7 +136,8 @@ class TaskManager {
     this.updateTaskCount();
   }
 
-  // função para criar botões
+  // Cria e retorna um botão com evento de clique
+  // Chamado dentro de renderTasks() para criar os botões de editar e deletar
   private createButton(
     text: string,
     onClick: () => void,
@@ -146,7 +150,8 @@ class TaskManager {
     return button;
   }
 
-  // função para alterar entre as completadas
+  // Alterna o estado de conclusão de uma tarefa e salva
+  // Chamado ao clicar no texto de uma tarefa
   private toggleTaskCompletion(taskId: string): void {
     const task = this.tasks.find((t) => t.id === taskId);
     if (task) {
@@ -156,27 +161,24 @@ class TaskManager {
     }
   }
 
-  // função para editar tarefas
+  // Permite editar o texto de uma tarefa
+  // Chamado ao clicar no botão "Editar"
   private editTask(taskId: string): void {
     const task = this.tasks.find((t) => t.id === taskId);
-
     if (task) {
       this.taskInput.value = task.text.trim();
-
-      // Evento para atualizar a tarefa quando o campo perde o foco
       this.taskInput.addEventListener("blur", () => {
         const newText = this.taskInput.value.trim();
-
-        // Verifica se o novo texto não está vazio
-        if (newText !== null && newText !== "") {
-          task.text = newText; // Atualiza o texto da tarefa
-          this.renderTasks(); // Re-renderiza as tarefas
-          this.saveTasks(); // Salva as tarefas no localStorage
+        if (newText) {
+          task.text = newText;
+          this.renderTasks();
+          this.saveTasks();
         }
       });
     }
   }
 
+  // Exibe um modal de confirmação antes de excluir uma tarefa
   private confirmDeleteTask(taskId: string): void {
     const confirmDelete = document.getElementById("confirmDelete");
     const cancelDelete = document.getElementById("cancelDelete");
@@ -187,37 +189,33 @@ class TaskManager {
       const handleConfirm = () => {
         this.deleteTask(taskId);
         this.confirmDeleteDialog.close();
-        confirmDelete.removeEventListener("click", handleConfirm);
-        cancelDelete.removeEventListener("click", handleCancel);
-      };
-
-      const handleCancel = () => {
-        this.confirmDeleteDialog.close();
-        confirmDelete.removeEventListener("click", handleConfirm);
-        cancelDelete.removeEventListener("click", handleCancel);
       };
 
       confirmDelete.addEventListener("click", handleConfirm);
-      cancelDelete.addEventListener("click", handleCancel);
+      cancelDelete.addEventListener("click", () =>
+        this.confirmDeleteDialog.close()
+      );
     }
   }
 
+  // Exclui uma tarefa e salva a lista atualizada
   private deleteTask(taskId: string): void {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     this.renderTasks();
     this.saveTasks();
   }
 
+  // Remove todas as tarefas concluídas e salva a lista atualizada
   private clearCompletedTasks(): void {
     this.tasks = this.tasks.filter((task) => !task.completed);
     this.renderTasks();
     this.saveTasks();
   }
 
+  // Aplica o filtro de exibição de tarefas
   private filterTasks(filterId: string): void {
     this.filterButtons.forEach((btn) => btn.classList.remove("active"));
-    const activeButton = document.getElementById(filterId);
-    if (activeButton) activeButton.classList.add("active");
+    document.getElementById(filterId)?.classList.add("active");
 
     switch (filterId) {
       case "filterAll":
@@ -232,33 +230,32 @@ class TaskManager {
     }
   }
 
+  // Retorna as tarefas filtradas com base no estado (todas, ativas ou concluídas)
   private filterTasksList(filter: "all" | "active" | "completed"): Task[] {
-    switch (filter) {
-      case "active":
-        return this.tasks.filter((task) => !task.completed);
-      case "completed":
-        return this.tasks.filter((task) => task.completed);
-      default:
-        return this.tasks;
-    }
+    return filter === "active"
+      ? this.tasks.filter((task) => !task.completed)
+      : filter === "completed"
+      ? this.tasks.filter((task) => task.completed)
+      : this.tasks;
   }
 
+  // Atualiza o contador de tarefas ativas
   private updateTaskCount(): void {
     const activeTasks = this.tasks.filter((task) => !task.completed).length;
-    this.taskCountDisplay.textContent = `${activeTasks} tarefa${
-      activeTasks !== 1 ? "s" : ""
-    } ativa${activeTasks !== 1 ? "s" : ""}`;
+    this.taskCountDisplay.textContent = `${activeTasks} tarefa(s) ativa(s)`;
   }
 
+  // Gera um ID único para cada tarefa
   private generateUniqueId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   }
 
+  // Salva as tarefas no localStorage
   private saveTasks(): void {
     localStorage.setItem("tasks", JSON.stringify(this.tasks));
   }
 
-  // Método para carregar as tarefas do localStorage
+  // Carrega as tarefas do localStorage ao iniciar a aplicação
   private loadTasks(): void {
     const savedTasks = localStorage.getItem("tasks");
     if (savedTasks) {
@@ -268,9 +265,5 @@ class TaskManager {
   }
 }
 
-// Inicialização do gerenciador de tarefas a partir do carregamento da página
-document.addEventListener("DOMContentLoaded", () => {
-  new TaskManager();
-});
-
-
+// Inicializa o gerenciador de tarefas ao carregar a página
+document.addEventListener("DOMContentLoaded", () => new TaskManager());
