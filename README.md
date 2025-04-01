@@ -9,10 +9,13 @@ O objetivo principal é aprimorar habilidades na configuração de um ambiente d
 
 Este projeto é um **Gerenciador de Tarefas (Task manager)** simples, onde o usuário pode:  
 ![gerencador de tarefas](./public/gerenciador_tarefas.png);
+
 ✅ **Adicionar tarefas**  
 ![adicionar tarefas](./public/tarefas_incluidas.png);
-✅ **Excluir tarefas**  
+
+✅ **Excluir tarefas**
 ![exclusão tarefas](./public/deletar_tarefas.png);
+
 ✅ **Marcar tarefas como concluídas**  
 ✅ **Salvar os dados localmente**  
 
@@ -85,8 +88,25 @@ gerenciador-tarefas/
 │── forge.config.js    # Configuração do Electron Forge
 ```
 --- 
+# Se quiser criar um clonar o projeto, fique a vontade para implementar novas features✌️.
+Siga o passo a passo abaixo:
+
+## 📌 1️⃣ Clonando o Repositório
 # Clone do projeto
 ```sh
 npm run make
 ```
+## 📌 2️⃣ Instalando as Dependências
+```sh
+npm install
+```
+## 📌 3️⃣ Iniciando o Projeto
+```sh
+npm start
+```
+## 📌 4️⃣ Compilando para Distribuição
+```sh
+npm run make
+```
+---
 
